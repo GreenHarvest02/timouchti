@@ -210,7 +210,12 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
             z-index: 40;
             text-align: center;
-            max-width: 80%;
+            width: 90%;
+            max-width: 500px;
+
+            /* Scrollable if text is long */
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         .message-text {
@@ -360,8 +365,11 @@
             noBtn.style.position = 'absolute';
             noBtn.style.zIndex = '100';
 
-            // Radius: distance from center
-            const radius = 130;
+            // Dynamic Radius based on screen width
+            // On mobile (e.g. 360px), we want ~100px or less to prevent overflow
+            const isMobile = window.innerWidth < 600;
+            const maxRadius = isMobile ? (window.innerWidth / 2) - 60 : 130;
+            const radius = Math.max(50, maxRadius); // Minimum 50px
 
             // Random angle
             const angle = Math.random() * Math.PI * 2;
