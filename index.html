@@ -57,7 +57,8 @@
             margin-top: 2rem;
             position: relative;
             min-height: 60px;
-            /* Ensure space for buttons */
+            flex-wrap: wrap;
+            /* Allow wrapping on small screens */
         }
 
         button {
@@ -349,28 +350,33 @@
             }, 200);
         });
 
-        // Function to make button run away - Just a Dodge
+        // Function to make button run away - Circle around
         function moveButton() {
+            const container = document.querySelector('.buttons');
+            const containerRect = container.getBoundingClientRect();
             const btnRect = noBtn.getBoundingClientRect();
 
-            // Random small movement (e.g. -150px to +150px)
-            const moveX = (Math.random() - 0.5) * 300;
-            const moveY = (Math.random() - 0.5) * 300;
+            // Set to absolute relative to the buttons container
+            noBtn.style.position = 'absolute';
+            noBtn.style.zIndex = '100';
 
-            let newLeft = btnRect.left + moveX;
-            let newTop = btnRect.top + moveY;
+            // Radius: distance from center
+            const radius = 130;
 
-            // Keep within screen bounds
-            if (newLeft < 0) newLeft = 10;
-            if (newLeft > window.innerWidth - btnRect.width) newLeft = window.innerWidth - btnRect.width - 10;
+            // Random angle
+            const angle = Math.random() * Math.PI * 2;
 
-            if (newTop < 0) newTop = 10;
-            if (newTop > window.innerHeight - btnRect.height) newTop = window.innerHeight - btnRect.height - 10;
+            // Center of container
+            const centerX = containerRect.width / 2;
+            const centerY = containerRect.height / 2;
 
-            // Apply new position
-            noBtn.style.position = 'fixed'; // Ensure it can move
-            noBtn.style.left = newLeft + 'px';
-            noBtn.style.top = newTop + 'px';
+            // New coords relative to container
+            // Math.cos gives -1 to 1.
+            const newLeft = centerX + (Math.cos(angle) * radius) - (btnRect.width / 2);
+            const newTop = centerY + (Math.sin(angle) * radius) - (btnRect.height / 2);
+
+            noBtn.style.left = `${newLeft}px`;
+            noBtn.style.top = `${newTop}px`;
         }
 
         // Click handler for Yes
@@ -378,11 +384,40 @@
             // 1. Change background
             document.body.style.background = "linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%)";
 
-            // 2. Hide main container
-            mainContainer.style.display = 'none';
+            // 2. Hide main container - REMOVED so it stays visible
+            // mainContainer.style.display = 'none';
 
-            // 3. Show success message
+            // 3. Show success message - BUT make it overlay or adjust position?
+            // Actually user said "keep the now move in the page dont hide it"
+            // Assuming he means keep the buttons visible.
+
+            // However, the success message is fixed fullscreen overlay.
+            // If we show success message, it covers everything.
+            // Let's make success message transparent or appear below?
+            // Or maybe just show the text?
+
+            // User request usually means "Don't clear the screen".
+
+            // Let's just comment out the hiding. The success message has z-index 20, container z-index 10.
+            // Success message will cover it.
+            // Wait, if success message covers it, we still can't interact with the old page.
+
+            // Let's modify success message to not be fixed fullscreen overlay but just appear?
+            // Or maybe success message layout needs change.
+
+            // BUT for this specific instruction "dont hide it":
+            // I will just remove the hiding line.
+
             successMessage.style.display = 'flex';
+            successMessage.style.pointerEvents = 'none'; // Allow clicking through if needed? No, text is important.
+
+            // To make sure we see both, let's adjust success message background?
+            // It has no background set (transparent), but flex centers it.
+            // The container is centered. They will overlap.
+
+            // Let's hide the container opacity instead? No, "dont hide it".
+
+            mainContainer.style.opacity = '0.3'; // Fade it out a bit but keep it?
 
             // 3.5 Show SMS icon
             document.getElementById('smsIcon').style.display = 'block';
