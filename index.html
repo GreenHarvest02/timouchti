@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>would you be my love timouchti forever !</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Mali:wght@500&display=swap"
         rel="stylesheet">
@@ -15,81 +15,144 @@
             --text-color: #590d22;
         }
 
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            touch-action: manipulation;
+        }
+
         body {
             margin: 0;
             padding: 0;
             font-family: 'Mali', cursive;
-            background-color: var(--bg-color);
+            background: linear-gradient(135deg, #fff0f3 0%, #ffe0e9 100%);
             height: 100vh;
+            width: 100vw;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            transition: background 1s ease;
+            transition: background 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .container {
             text-align: center;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.95);
             padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2);
-            backdrop-filter: blur(5px);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(255, 77, 109, 0.15);
+            backdrop-filter: blur(10px);
             z-index: 10;
             position: relative;
             max-width: 90%;
-            transition: opacity 0.5s ease;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.8);
         }
 
         h1 {
             font-family: 'Dancing Script', cursive;
-            font-size: 4rem;
+            font-size: 3.5rem;
             color: var(--primary-color);
             margin-bottom: 2rem;
-            line-height: 1.2;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            line-height: 1.3;
+            text-shadow: 2px 2px 8px rgba(255, 77, 109, 0.2);
+            transition: all 0.5s ease;
         }
 
         .buttons {
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            gap: 1.5rem;
             margin-top: 2rem;
             position: relative;
-            min-height: 60px;
+            min-height: 80px;
             flex-wrap: wrap;
-            /* Allow wrapping on small screens */
+            align-items: center;
         }
 
         button {
-            padding: 1rem 2rem;
+            padding: 1rem 2.5rem;
             font-size: 1.5rem;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             font-family: 'Mali', cursive;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        button:active::before {
+            width: 300px;
+            height: 300px;
         }
 
         #yesBtn {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, #ff4d6d 0%, #ff2a55 100%);
             color: white;
         }
 
-        #yesBtn:hover {
-            transform: scale(1.1);
-            background-color: #ff2a55;
-            box-shadow: 0 6px 20px rgba(255, 77, 109, 0.4);
+        #yesBtn:hover:not(:disabled) {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 77, 109, 0.4);
+        }
+
+        #yesBtn:disabled {
+            opacity: 0.8;
+            cursor: not-allowed;
         }
 
         #noBtn {
             background-color: #fff;
             color: var(--primary-color);
             border: 2px solid var(--primary-color);
-            position: relative;
-            transition: all 0.5s ease;
-            /* Make it slide smoothly */
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #noBtn:hover {
+            background-color: rgba(255, 77, 109, 0.05);
+        }
+
+        #retryBtn {
+            background: linear-gradient(135deg, #ffb3c6 0%, #ffc9d6 100%);
+            color: #590d22;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
         }
 
         /* Success Message Styling */
@@ -128,21 +191,21 @@
         .heart {
             position: absolute;
             color: #fff;
-            /* Fallback */
             opacity: 0;
             font-size: 2rem;
             user-select: none;
             pointer-events: none;
+            filter: drop-shadow(0 2px 4px rgba(255, 77, 109, 0.3));
         }
 
         @keyframes popIn {
             0% {
-                transform: scale(0);
+                transform: scale(0) rotate(-10deg);
                 opacity: 0;
             }
 
             100% {
-                transform: scale(1);
+                transform: scale(1) rotate(0deg);
                 opacity: 1;
             }
         }
@@ -168,14 +231,19 @@
         /* SMS Icon */
         .sms-icon {
             display: none;
-            /* Hidden until YES */
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 30px;
+            right: 30px;
             font-size: 4rem;
             cursor: pointer;
             z-index: 30;
-            animation: bounce 2s infinite;
+            animation: bounce 2s ease-in-out infinite;
+            filter: drop-shadow(0 4px 10px rgba(255, 77, 109, 0.4));
+            transition: transform 0.2s ease;
+        }
+
+        .sms-icon:hover {
+            transform: scale(1.1);
         }
 
         @keyframes bounce {
@@ -189,11 +257,11 @@
             }
 
             40% {
-                transform: translateY(-20px);
+                transform: translateY(-15px);
             }
 
             60% {
-                transform: translateY(-10px);
+                transform: translateY(-8px);
             }
         }
 
@@ -205,33 +273,55 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            padding: 2.5rem;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             z-index: 40;
-            text-align: center;
+            text-align: left;
             width: 90%;
             max-width: 500px;
-
-            /* Scrollable if text is long */
             max-height: 80vh;
             overflow-y: auto;
+            border: 2px solid rgba(255, 77, 109, 0.2);
+        }
+
+        .message-modal::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .message-modal::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .message-modal::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
         }
 
         .message-text {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: var(--text-color);
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            line-height: 1.6;
         }
 
         .close-btn {
-            background: var(--primary-color);
+            background: linear-gradient(135deg, #ff4d6d 0%, #ff2a55 100%);
             color: white;
             border: none;
-            padding: 5px 15px;
-            border-radius: 10px;
+            padding: 10px 25px;
+            border-radius: 25px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 1.1rem;
+            font-family: 'Mali', cursive;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+        }
+
+        .close-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 77, 109, 0.4);
         }
 
         /* Background overlay */
@@ -242,35 +332,57 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
             z-index: 35;
+            backdrop-filter: blur(4px);
+            animation: fadeIn 0.3s ease;
         }
 
         /* Mobile Adjustments */
         @media (max-width: 600px) {
             .container {
-                padding: 1.5rem;
-                /* Reduce padding to give more space for content */
+                padding: 2rem 1.5rem;
             }
 
             h1 {
-                font-size: 1.8rem;
-                /* Smaller font for long text */
+                font-size: 2rem;
                 margin-bottom: 1.5rem;
             }
 
             .buttons {
                 gap: 1rem;
-                /* Smaller gap */
+                min-height: 70px;
             }
 
             button {
-                padding: 0.6rem 1.2rem;
-                font-size: 1rem;
+                padding: 0.8rem 1.8rem;
+                font-size: 1.2rem;
             }
 
             .success-text {
-                font-size: 2.5rem;
+                font-size: 3rem;
+            }
+
+            .sub-text {
+                font-size: 1.2rem;
+            }
+
+            .sms-icon {
+                bottom: 20px;
+                right: 20px;
+                font-size: 3rem;
+            }
+
+            .message-modal {
+                padding: 1.5rem;
+            }
+
+            .message-text {
+                font-size: 1.1rem;
+            }
+
+            #finalSubText {
+                font-size: 1.3rem !important;
             }
         }
     </style>
@@ -299,7 +411,8 @@
     <div class="overlay" id="overlay"></div>
     <div class="message-modal" id="messageModal">
         <div class="message-text">hii timouchti lemme say something ❤️, nbdawha bli nhbk yek.. am happy so so happy b
-            all days li jawzna kifkif w li ghadi njawzohom au futur inchaalah , stay in my life 9ad mat9dri , 3lh! psq
+            all days li jawzna kifkif w li ghadi njawzohom au futur inchaalah 💕✨✨, stay in my life 9ad mat9dri💕✨ ,
+            3lh! psq
             nti hiya 7yatiiii w 3omri , w my enrgy , nhbk so much ❤️❤️ wllh </div>
         <button class="close-btn" onclick="closeModal()">Close</button>
     </div>
@@ -392,40 +505,37 @@
             // 1. Change background
             document.body.style.background = "linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%)";
 
-            // 2. Hide main container - REMOVED so it stays visible
-            // mainContainer.style.display = 'none';
+            // Revert Text (in case they clicked No first) so it doesn't say "tfuuu..."
+            document.querySelector('h1').innerText = "Yayyy! I knew you’d say yes! 💕✨";
 
-            // 3. Show success message - BUT make it overlay or adjust position?
-            // Actually user said "keep the now move in the page dont hide it"
-            // Assuming he means keep the buttons visible.
+            // Hide the "Please" button if it exists
+            const retryBtn = document.getElementById('retryBtn');
+            if (retryBtn) retryBtn.style.display = 'none';
 
-            // However, the success message is fixed fullscreen overlay.
-            // If we show success message, it covers everything.
-            // Let's make success message transparent or appear below?
-            // Or maybe just show the text?
+            // HIDE THE NO BUTTON!
+            noBtn.style.display = 'none';
 
-            // User request usually means "Don't clear the screen".
+            // Hide the overlay success message div because we put the text in H1
+            successMessage.style.display = 'none';
 
-            // Let's just comment out the hiding. The success message has z-index 20, container z-index 10.
-            // Success message will cover it.
-            // Wait, if success message covers it, we still can't interact with the old page.
+            // And maybe add the subtext to the container?
+            let subText = document.getElementById('finalSubText');
+            if (!subText) {
+                subText = document.createElement('p');
+                subText.id = 'finalSubText';
+                subText.innerText = "something built by l mohandisss madaani to his wiiife💖💖";
+                subText.style.fontFamily = "'Dancing Script', cursive";
+                subText.style.fontSize = "2rem";
+                subText.style.marginTop = "20px";
+                subText.style.color = "#d90429";
+                mainContainer.appendChild(subText);
+            }
 
-            // Let's modify success message to not be fixed fullscreen overlay but just appear?
-            // Or maybe success message layout needs change.
-
-            // BUT for this specific instruction "dont hide it":
-            // I will just remove the hiding line.
-
-            successMessage.style.display = 'flex';
-            successMessage.style.pointerEvents = 'none'; // Allow clicking through if needed? No, text is important.
-
-            // To make sure we see both, let's adjust success message background?
-            // It has no background set (transparent), but flex centers it.
-            // The container is centered. They will overlap.
-
-            // Let's hide the container opacity instead? No, "dont hide it".
-
-            mainContainer.style.opacity = '0.3'; // Fade it out a bit but keep it?
+            // Hide Yes Button? OR keep it?
+            // "keep the now move in the page" -> implicates keeping interacting elements.
+            // Let's just disable Yes button so she doesn't click it 100 times triggering music restart.
+            yesBtn.disabled = true;
+            yesBtn.innerText = "Love You! 💖";
 
             // 3.5 Show SMS icon
             document.getElementById('smsIcon').style.display = 'block';
