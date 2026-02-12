@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Will you be my Valentine?</title>
+    <title>would you be my love timouchti forever !</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Mali:wght@500&display=swap"
         rel="stylesheet">
     <style>
@@ -166,17 +166,29 @@
 
         /* Mobile Adjustments */
         @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem;
+                /* Reduce padding to give more space for content */
+            }
+
             h1 {
-                font-size: 2.5rem;
+                font-size: 1.8rem;
+                /* Smaller font for long text */
+                margin-bottom: 1.5rem;
+            }
+
+            .buttons {
+                gap: 1rem;
+                /* Smaller gap */
             }
 
             button {
-                padding: 0.8rem 1.5rem;
-                font-size: 1.2rem;
+                padding: 0.6rem 1.2rem;
+                font-size: 1rem;
             }
 
             .success-text {
-                font-size: 3rem;
+                font-size: 2.5rem;
             }
         }
     </style>
@@ -185,7 +197,7 @@
 <body>
 
     <div class="container" id="mainContainer">
-        <h1>Will you be my Valentine?</h1>
+        <h1>would you be my love timouchti forever !</h1>
         <div class="buttons">
             <button id="yesBtn">Yes 💖</button>
             <button id="noBtn">No 😢</button>
@@ -194,8 +206,8 @@
 
     <!-- Hidden Success Message -->
     <div class="success-message" id="successMessage">
-        <div class="success-text">Yayyy! I knew you’d say yes! 💕✨</div>
-        <div class="sub-text">Happy Valentine's Day!</div>
+        <div class="success-text">Yayyy! I knew you’d say yes! love you forever a timouchti 💕✨</div>
+        <div class="sub-text">something built by l mohandisss madaani to his wiiife💖💖 </div>
     </div>
 
     <!-- Optional: Background Music -->
@@ -239,11 +251,14 @@
             }
 
             // NOW make the No button run away for future attempts!
-            // Wait for mouseout so they can see it's still there
-            noBtn.addEventListener('mouseout', () => {
+            // Enable runaway mode after a short delay (better for mobile)
+            setTimeout(() => {
                 noBtn.addEventListener('mouseover', moveButton);
-                noBtn.addEventListener('touchstart', moveButton);
-            }, { once: true });
+                noBtn.addEventListener('touchstart', (e) => {
+                    e.preventDefault(); // Stop click from happening
+                    moveButton();
+                });
+            }, 200);
         });
 
         // Function to make button run away - Just a Dodge
